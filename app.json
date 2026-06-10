@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "name": "CelerFast",
+    "slug": "celerfast",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0a0a0a"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.celerfast.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "CelerFast needs location access to track your activities.",
+        "NSLocationAlwaysUsageDescription": "CelerFast needs location access to track your activities.",
+        "NSPhotoLibraryAddUsageDescription": "CelerFast needs access to save activity images."
+      }
+    },
+    "android": {
+      "package": "com.celerfast.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0a0a0a"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA3X9ZTk3Dl_EKSyG9Cj-OPl5Apfdlx95Y"
+        }
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "CelerFast needs location to track your activities."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "664efb36-0891-423b-8de3-0ed402b0db05"
+      }
+    }
+  }
+}
