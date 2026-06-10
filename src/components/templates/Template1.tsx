@@ -1,21 +1,11 @@
-// Template 1: Large route only
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Activity } from '@/types';
-import { RoutePolyline } from '@/components/RoutePolyline';
+import { Activity } from '../../types';
+import RoutePolyline from '../RoutePolyline';
 
 export default function Template1({ activity }: { activity: Activity }) {
   return (
-    <View style={styles.container}>
-      <RoutePolyline activity={activity} size={380} color="#00ff88" strokeWidth={5} />
-    </View>
+    <div style={{ width: 400, height: 400, background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <RoutePolyline activity={activity} size={380} color="#FFD600" strokeWidth={5} />
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: 400, height: 400,
-    backgroundColor: 'transparent',
-    justifyContent: 'center', alignItems: 'center',
-  },
-});

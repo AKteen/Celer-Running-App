@@ -16,15 +16,6 @@ export type Activity = {
   distanceKm: number;
   averagePace: string;
   route: RoutePoint[];
-  metadata: {
-    maxSpeed: number;
-    avgSpeed: number;
-  };
-  createdAt: string;
-};
-
-export type User = {
-  id: string;
-  email: string;
+  metadata: { maxSpeed: number; avgSpeed: number };
   createdAt: string;
 };

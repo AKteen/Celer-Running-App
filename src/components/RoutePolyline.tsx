@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Svg, { Polyline } from 'react-native-svg';
-import { Activity } from '@/types';
+import { Activity } from '../types';
 
-type Props = { activity: Activity; size?: number };
+type Props = {
+  activity: Activity;
+  size?: number;
+  color?: string;
+  strokeWidth?: number;
+};
 
-function normalizeRoute(route: Activity['route'], size: number) {
+function normalize(activity: Activity, size: number) {
+  const { route } = activity;
   if (route.length < 2) return '';
   const lats = route.map((p) => p.latitude);
   const lons = route.map((p) => p.longitude);
@@ -13,22 +17,23 @@ function normalizeRoute(route: Activity['route'], size: number) {
   const minLon = Math.min(...lons), maxLon = Math.max(...lons);
   const pad = size * 0.1;
   const w = size - pad * 2, h = size - pad * 2;
-  const latRange = maxLat - minLat || 0.0001;
-  const lonRange = maxLon - minLon || 0.0001;
-  return route
-    .map((p) => {
-      const x = pad + ((p.longitude - minLon) / lonRange) * w;
-      const y = pad + (1 - (p.latitude - minLat) / latRange) * h;
-      return `${x},${y}`;
-    })
-    .join(' ');
+  const latR = maxLat - minLat || 0.0001;
+  const lonR = maxLon - minLon || 0.0001;
+  return route.map((p) => {
+    const x = pad + ((p.longitude - minLon) / lonR) * w;
+    const y = pad + (1 - (p.latitude - minLat) / latR) * h;
+    return `${x},${y}`;
+  }).join(' ');
 }
 
-export function RoutePolyline({ activity, size = 300, color = '#00ff88', strokeWidth = 4 }: Props & { color?: string; strokeWidth?: number }) {
-  const points = normalizeRoute(activity.route, size);
+export default function RoutePolyline({ activity, size = 300, color = '#FFD600', strokeWidth = 4 }: Props) {
+  const points = normalize(activity, size);
   return (
-    <Svg width={size} height={size}>
-      {points ? <Polyline points={points} fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" /> : null}
-    </Svg>
+    <svg width={size} height={size} style={{ overflow: 'visible' }}>
+      {points && (
+        <polyline points={points} fill="none" stroke={color}
+          strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
+      )}
+    </svg>
   );
 }
