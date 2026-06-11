@@ -20,7 +20,7 @@ export default function ActivitiesPage() {
           <img src="/shoe_celer.png" alt="Celer" className="w-6 h-6 object-contain" />
           <h1 className="text-xl font-bold tracking-tight">Activities</h1>
         </div>
-        <button onClick={signOut} className="text-[#444] text-xs tracking-widest uppercase border border-[#222] px-3 py-2">
+        <button onClick={signOut} className="text-black bg-brand text-xs tracking-widest uppercase font-semibold border border-brand px-3 py-2 hover:opacity-90">
           Logout
         </button>
       </div>
