@@ -61,19 +61,19 @@ export default function DetailPage() {
       </div>
 
       {coords.length > 0 && (
-        <MapContainer center={mid} zoom={15} className="w-full h-64" zoomControl={false} dragging={false}>
+        <MapContainer center={mid} zoom={15} className="w-full h-40 sm:h-64" zoomControl={false} dragging={false}>
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <Polyline positions={coords} color="#FFD600" weight={4} />
         </MapContainer>
       )}
 
-      <div className="p-4 flex flex-col gap-4">
+      <div className="p-3 sm:p-4 flex flex-col gap-2 sm:gap-4">
         <div>
-          <p className="text-xl font-bold uppercase tracking-wide">{activity.activityType}</p>
+          <p className="text-lg sm:text-xl font-bold uppercase tracking-wide">{activity.activityType}</p>
           <p className="text-[#444] text-xs mt-1 tracking-wide">{formatDate(activity.startedAt)}</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
           <StatCard label="Distance" value={activity.distanceKm.toFixed(2)} unit="km" />
           <StatCard label="Duration" value={formatDuration(activity.durationSeconds)} unit="" />
           <StatCard label="Avg Pace" value={activity.averagePace} unit="/km" />
@@ -81,12 +81,12 @@ export default function DetailPage() {
         </div>
 
         <button onClick={() => nav(`/share/${activity.id}`)}
-          className="w-full bg-brand text-black font-bold py-4 text-sm tracking-widest uppercase mt-2">
+          className="w-full bg-brand text-black font-bold py-3 sm:py-4 text-xs sm:text-sm tracking-widest uppercase mt-2">
           Create Share Image
         </button>
 
         <button onClick={handleDelete}
-          className="w-full border border-red-500 text-red-400 font-semibold py-4 text-sm tracking-widest uppercase">
+          className="w-full border border-red-500 text-red-400 font-semibold py-3 sm:py-4 text-xs sm:text-sm tracking-widest uppercase">
           Delete Activity
         </button>
       </div>
@@ -96,9 +96,9 @@ export default function DetailPage() {
 
 function StatCard({ label, value, unit }: { label: string; value: string; unit: string }) {
   return (
-    <div className="bg-[#111] border border-[#1a1a1a] p-4">
-      <p className="text-white text-2xl font-bold">
-        {value} <span className="text-[#444] text-xs font-normal">{unit}</span>
+    <div className="bg-[#111] border border-[#1a1a1a] p-2 sm:p-4">
+      <p className="text-white text-lg sm:text-2xl font-bold">
+        {value} <span className="text-xs text-[#444] font-normal">{unit}</span>
       </p>
       <p className="text-[#444] text-[10px] uppercase tracking-widest mt-1">{label}</p>
     </div>

@@ -14,36 +14,36 @@ export default function ActivitiesPage() {
   }, [session]);
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-5">
-        <div className="flex items-center gap-2">
-          <img src="/shoe_celer.png" alt="Celer" className="w-6 h-6 object-contain" />
-          <h1 className="text-xl font-bold tracking-tight">Activities</h1>
+    <div className="p-3 sm:p-4">
+      <div className="flex justify-between items-center gap-2 mb-4 sm:mb-5">
+        <div className="flex items-center gap-2 min-w-0">
+          <img src="/shoe_celer.png" alt="Celer" className="w-5 h-5 sm:w-6 sm:h-6 object-contain flex-shrink-0" />
+          <h1 className="text-lg sm:text-xl font-bold tracking-tight truncate">Activities</h1>
         </div>
-        <button onClick={signOut} className="text-black bg-brand text-xs tracking-widest uppercase font-semibold border border-brand px-3 py-2 hover:opacity-90">
+        <button onClick={signOut} className="text-black bg-brand text-xs tracking-widest uppercase font-semibold border border-brand px-2 sm:px-3 py-2 hover:opacity-90 whitespace-nowrap text-2xs sm:text-xs">
           Logout
         </button>
       </div>
 
       {activities.length === 0 ? (
-        <p className="text-[#333] text-center mt-24 text-sm">No activities yet.</p>
+        <p className="text-[#333] text-center mt-12 sm:mt-24 text-sm">No activities yet.</p>
       ) : (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1.5 sm:gap-2">
           {activities.map((a) => (
             <button key={a.id} onClick={() => nav(`/activity/${a.id}`)}
-              className="bg-[#111] border border-[#1a1a1a] p-4 flex justify-between items-center text-left w-full hover:border-brand transition-colors">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 border border-[#222] flex items-center justify-center">
+              className="bg-[#111] border border-[#1a1a1a] p-3 sm:p-4 flex justify-between items-center text-left w-full hover:border-brand transition-colors gap-2">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 border border-[#222] flex items-center justify-center flex-shrink-0">
                   {a.activityType === 'run' ? <RunIcon /> : <WalkIcon />}
                 </div>
-                <div>
-                  <p className="text-white font-semibold text-sm uppercase tracking-wide">{a.activityType}</p>
-                  <p className="text-[#444] text-xs mt-0.5">{formatDate(a.startedAt)}</p>
+                <div className="min-w-0">
+                  <p className="text-white font-semibold text-xs sm:text-sm uppercase tracking-wide truncate">{a.activityType}</p>
+                  <p className="text-[#444] text-xs mt-0.5 truncate">{formatDate(a.startedAt)}</p>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="text-brand font-bold text-lg">{a.distanceKm.toFixed(2)} <span className="text-xs text-[#444] font-normal">km</span></p>
-                <p className="text-[#444] text-xs mt-0.5">{formatDuration(a.durationSeconds)} · {a.averagePace}/km</p>
+              <div className="text-right flex-shrink-0">
+                <p className="text-brand font-bold text-sm sm:text-lg">{a.distanceKm.toFixed(2)} <span className="text-xs text-[#444] font-normal">km</span></p>
+                <p className="text-[#444] text-xs mt-0.5 whitespace-nowrap">{formatDuration(a.durationSeconds)}</p>
               </div>
             </button>
           ))}

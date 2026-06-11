@@ -117,10 +117,10 @@ export default function RecordPage() {
       </div>
 
       {!isRecording && (
-        <div className="flex gap-2 p-3">
+        <div className=\"flex gap-2 p-2 sm:p-3\">
           {(['run', 'walk'] as ActivityType[]).map((t) => (
             <button key={t} onClick={() => store.setActivityType(t)}
-              className={`flex-1 py-3 text-sm font-semibold border transition-colors uppercase tracking-widest ${
+              className={`flex-1 py-2 sm:py-3 text-xs sm:text-sm font-semibold border transition-colors uppercase tracking-widest ${
                 activityType === t
                   ? 'bg-brand text-black border-brand'
                   : 'border-[#222] text-[#555]'}`}>
@@ -200,9 +200,9 @@ function CircleBtn({
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex-1 flex flex-col items-center py-4 gap-0.5">
-      <span className="text-white font-bold text-lg">{value}</span>
-      <span className="text-[#444] text-[10px] uppercase tracking-widest">{label}</span>
+    <div className="flex-1 flex flex-col items-center py-2 sm:py-4 gap-0.5">
+      <span className="text-white font-bold text-base sm:text-lg">{value}</span>
+      <span className="text-[#444] text-[9px] sm:text-[10px] uppercase tracking-widest">{label}</span>
     </div>
   );
 }
