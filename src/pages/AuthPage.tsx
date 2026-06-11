@@ -20,7 +20,7 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-dark">
-      <h1 className="text-5xl font-black text-brand mb-1 tracking-tight">CELER</h1>
+      <img src="/large_celer_png.png" alt="Celer" className="w-32 h-32 mb-8 object-contain" />
       <p className="text-[#444] text-xs mb-14 tracking-widest uppercase">Track · Record · Share</p>
 
       <form onSubmit={handleSubmit} className="w-full max-w-sm flex flex-col gap-3">

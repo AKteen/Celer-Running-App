@@ -16,7 +16,10 @@ export default function ActivitiesPage() {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-5">
-        <h1 className="text-xl font-bold tracking-tight">Activities</h1>
+        <div className="flex items-center gap-2">
+          <img src="/shoe_celer.png" alt="Celer" className="w-6 h-6 object-contain" />
+          <h1 className="text-xl font-bold tracking-tight">Activities</h1>
+        </div>
         <button onClick={signOut} className="text-[#444] text-xs tracking-widest uppercase border border-[#222] px-3 py-2">
           Logout
         </button>

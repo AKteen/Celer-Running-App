@@ -111,6 +111,11 @@ export default function RecordPage() {
 
   return (
     <div className="flex flex-col h-[calc(100dvh-64px)]">
+      <div className="flex items-center gap-3 p-4 border-b border-[#1a1a1a] bg-[#0a0a0a]">
+        <img src="/shoe_celer.png" alt="Celer" className="w-6 h-6 object-contain" />
+        <h1 className="text-sm font-bold uppercase tracking-widest">Start Recording</h1>
+      </div>
+
       {!isRecording && (
         <div className="flex gap-2 p-3">
           {(['run', 'walk'] as ActivityType[]).map((t) => (
