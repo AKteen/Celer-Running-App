@@ -23,6 +23,7 @@ type ActivityStore = RecordingState & {
   incrementDuration: () => void;
   resetRecording: () => void;
   fetchActivities: (userId: string) => Promise<void>;
+  fetchActivityById: (id: string) => Promise<Activity | null>;
   saveActivity: (a: Omit<Activity, 'id' | 'createdAt'>) => Promise<Activity | null>;
   deleteActivity: (id: string) => Promise<void>;
 };
@@ -56,6 +57,12 @@ export const useActivityStore = create<ActivityStore>((set, get) => ({
       .from('activities').select('*').eq('userId', userId)
       .order('startedAt', { ascending: false });
     if (data) set({ activities: data as Activity[] });
+  },
+
+  fetchActivityById: async (id) => {
+    const { data } = await supabase
+      .from('activities').select('*').eq('id', id).single();
+    return data as Activity | null;
   },
 
   saveActivity: async (activity) => {

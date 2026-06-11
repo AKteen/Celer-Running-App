@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import { useActivityStore } from '../stores/activityStore';
@@ -8,6 +8,7 @@ import Template3 from '../components/templates/Template3';
 import Template4 from '../components/templates/Template4';
 import Template5 from '../components/templates/Template5';
 import Template6 from '../components/templates/Template6';
+import { Activity } from '../types';
 
 const TEMPLATES = [
   { id: 1, label: 'Route Only', Component: Template1 },
@@ -21,11 +22,34 @@ const TEMPLATES = [
 export default function SharePage() {
   const { id } = useParams();
   const nav = useNavigate();
-  const { activities } = useActivityStore();
-  const activity = activities.find((a) => a.id === id);
+  const { activities, fetchActivityById } = useActivityStore();
+  const [activity, setActivity] = useState<Activity | null>(null);
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [capturing, setCapturing] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const loadActivity = async () => {
+      setLoading(true);
+      const found = activities.find((a) => a.id === id);
+      if (found) {
+        setActivity(found);
+      } else {
+        const fetched = await fetchActivityById(id!);
+        setActivity(fetched);
+      }
+      setLoading(false);
+    };
+
+    if (id) loadActivity();
+  }, [id, activities, fetchActivityById]);
+
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-brand text-2xl">⚡</div>
+    </div>
+  );
 
   if (!activity) return (
     <div className="min-h-screen flex items-center justify-center">
@@ -44,7 +68,7 @@ export default function SharePage() {
   };
 
   const handleSave = async () => {
-    setLoading(true);
+    setCapturing(true);
     const dataUrl = await capture();
     if (dataUrl) {
       const a = document.createElement('a');
@@ -52,13 +76,13 @@ export default function SharePage() {
       a.download = `celerfast-${id}.png`;
       a.click();
     }
-    setLoading(false);
+    setCapturing(false);
   };
 
   const handleShare = async () => {
-    setLoading(true);
+    setCapturing(true);
     const dataUrl = await capture();
-    if (!dataUrl) { setLoading(false); return; }
+    if (!dataUrl) { setCapturing(false); return; }
     const blob = await (await fetch(dataUrl)).blob();
     const file = new File([blob], 'activity.png', { type: 'image/png' });
     if (navigator.canShare?.({ files: [file] })) {
@@ -69,7 +93,7 @@ export default function SharePage() {
       a.download = `celerfast-${id}.png`;
       a.click();
     }
-    setLoading(false);
+    setCapturing(false);
   };
 
   return (
@@ -102,11 +126,11 @@ export default function SharePage() {
       </div>
 
       <div className="flex gap-3 p-4">
-        <button onClick={handleSave} disabled={loading}
+        <button onClick={handleSave} disabled={capturing}
           className="flex-1 border border-[#222] text-white font-semibold py-4 text-sm tracking-widest uppercase disabled:opacity-50">
           Save PNG
         </button>
-        <button onClick={handleShare} disabled={loading}
+        <button onClick={handleShare} disabled={capturing}
           className="flex-1 bg-brand text-black font-bold py-4 text-sm tracking-widest uppercase disabled:opacity-50">
           Share
         </button>

@@ -1,14 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Polyline } from 'react-leaflet';
 import { useActivityStore } from '../stores/activityStore';
 import { formatDuration, formatDate } from '../utils/format';
+import { Activity } from '../types';
 
 export default function DetailPage() {
   const { id } = useParams();
   const nav = useNavigate();
-  const { activities, deleteActivity } = useActivityStore();
-  const activity = activities.find((a) => a.id === id);
+  const { activities, deleteActivity, fetchActivityById } = useActivityStore();
+  const [loading, setLoading] = useState(true);
+  const [activity, setActivity] = useState<Activity | null>(null);
+
+  useEffect(() => {
+    const loadActivity = async () => {
+      setLoading(true);
+      // First check local activities
+      const found = activities.find((a) => a.id === id);
+      if (found) {
+        setActivity(found);
+      } else {
+        // Fetch from Supabase if not in local state
+        const fetched = await fetchActivityById(id!);
+        setActivity(fetched);
+      }
+      setLoading(false);
+    };
+
+    if (id) loadActivity();
+  }, [id, activities, fetchActivityById]);
+
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-brand text-2xl">⚡</div>
+    </div>
+  );
 
   if (!activity) return (
     <div className="min-h-screen flex items-center justify-center">
